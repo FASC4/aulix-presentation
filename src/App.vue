@@ -340,16 +340,16 @@ const sendWhatsApp = () => {
       </Transition>
     </div>
     
-    <!-- Indicador Flotante para Avanzar (Visible de la diapositiva 2 a la penúltima) -->
+    <!-- Indicador Flotante para Avanzar (Más grande y legible) -->
     <div 
       v-if="currentSlide > 0 && currentSlide < totalSlides - 1" 
-      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-blue-950/60 border border-blue-500/30 backdrop-blur-md text-xs font-bold text-cyan-400 shadow-lg pointer-events-none select-none transition-all duration-300"
+      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-3 rounded-full bg-blue-950/80 border border-blue-500/40 backdrop-blur-md text-sm md:text-base font-bold text-cyan-300 shadow-[0_0_20px_rgba(0,229,255,0.2)] pointer-events-none select-none transition-all duration-300"
     >
-      <span class="relative flex h-2 w-2">
+      <span class="relative flex h-3 w-3">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"></span>
       </span>
-      <span>Presiona <kbd class="px-1.5 py-0.5 bg-blue-900/80 rounded border border-blue-700 text-white font-mono text-[10px]">Espacio</kbd> o <kbd class="px-1.5 py-0.5 bg-blue-900/80 rounded border border-blue-700 text-white font-mono text-[10px]"><i class="fa-solid fa-arrow-right"></i></kbd> para avanzar</span>
+      <span>Presiona <kbd class="px-2 py-1 bg-blue-900 rounded-md border border-blue-700 text-white font-mono text-xs shadow-sm">Espacio</kbd> o <kbd class="px-2 py-1 bg-blue-900 rounded-md border border-blue-700 text-white font-mono text-xs shadow-sm"><i class="fa-solid fa-arrow-right"></i></kbd> para avanzar</span>
     </div>
 
     <!-- Contador de Slides -->
