@@ -340,8 +340,20 @@ const sendWhatsApp = () => {
       </Transition>
     </div>
     
+    <!-- Indicador Flotante para Avanzar (Visible de la diapositiva 2 a la penúltima) -->
+    <div 
+      v-if="currentSlide > 0 && currentSlide < totalSlides - 1" 
+      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-blue-950/60 border border-blue-500/30 backdrop-blur-md text-xs font-bold text-cyan-400 shadow-lg pointer-events-none select-none transition-all duration-300"
+    >
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+      </span>
+      <span>Presiona <kbd class="px-1.5 py-0.5 bg-blue-900/80 rounded border border-blue-700 text-white font-mono text-[10px]">Espacio</kbd> o <kbd class="px-1.5 py-0.5 bg-blue-900/80 rounded border border-blue-700 text-white font-mono text-[10px]"><i class="fa-solid fa-arrow-right"></i></kbd> para avanzar</span>
+    </div>
+
     <!-- Contador de Slides -->
-    <div class="absolute bottom-6 right-8 text-blue-500/50 font-mono text-sm z-50 font-bold">
+    <div class="absolute bottom-6 right-8 text-blue-500/50 font-mono text-sm z-50 font-bold select-none">
       {{ currentSlide + 1 }} / {{ totalSlides }}
     </div>
 
