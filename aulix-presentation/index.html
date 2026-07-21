@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AuLix - El Futuro de la Gestión Escolar</title>
+
+    <!-- Reveal.js Core -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    
+    <!-- TEMA BASE OSCURO (Crucial para evitar que Reveal ponga fondos blancos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/night.min.css">
+    
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- TAILWIND CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        midnight: '#040B16',
+                        glass: 'rgba(13, 27, 50, 0.6)',
+                        glassborder: 'rgba(30, 58, 138, 0.4)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Reseteo estricto para integración limpia de Tailwind */
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal p, .reveal ul, .reveal li {
+            text-transform: none !important;
+            margin: 0 !important;
+            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+        }
+        
+        /* 
+           FORZAR EL FONDO MIDNIGHT 
+           Se aplica a todos los contenedores de Reveal para evitar que los sobreescriba.
+        */
+        html.reveal-viewport, body, .reveal, .slide-background {
+            background-color: #040B16 !important;
+            color: #ffffff !important;
+            background-image: 
+                radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px),
+                radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px) !important;
+            background-size: 40px 40px !important;
+            background-position: 0 0, 20px 20px !important;
+        }
+
+        /* Luces volumétricas sutiles de fondo */
+        .glow-top {
+            position: absolute; top: -10%; left: -10%; width: 50%; height: 50%;
+            background: rgba(0, 229, 255, 0.15); filter: blur(120px); border-radius: 50%; z-index: -1; pointer-events: none;
+        }
+        .glow-bottom {
+            position: absolute; bottom: -10%; right: -10%; width: 50%; height: 50%;
+            background: rgba(59, 130, 246, 0.15); filter: blur(120px); border-radius: 50%; z-index: -1; pointer-events: none;
+        }
+
+        .slide-flex-center { display: flex !important; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%; }
+        
+        /* Animaciones para la pantalla reactiva */
+        .role-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .role-btn.active { background-color: rgba(30, 58, 138, 0.8) !important; border-color: #22D3EE !important; transform: scale(1.02); }
+        .fade-content { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="glow-top"></div>
+    <div class="glow-bottom"></div>
+
+    <div class="reveal">
+        <div class="slides w-full max-w-6xl mx-auto">
+
+            <!-- SLIDE 1: Portada (Colores Sólidos) -->
+            <section class="slide-flex-center">
+                <div class="mb-8 w-24 h-24 rounded-3xl bg-blue-600 flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.4)]">
+                    <i class="fa-solid fa-graduation-cap text-5xl text-white"></i>
+                </div>
+                <h1 class="text-7xl md:text-9xl font-black tracking-tighter mb-4 text-white">AULIX</h1>
+                <h2 class="text-2xl md:text-4xl text-blue-200 font-light mb-8 max-w-3xl">
+                    Gestiona tu colegio sin perder la cabeza.
+                </h2>
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-900/40 border border-blue-500/50 text-sm font-bold text-cyan-400">
+                    <i class="fa-solid fa-arrow-right animate-pulse"></i> Presiona espacio para iniciar
+                </div>
+            </section>
+
+            <!-- SLIDE 2: La Realidad Administrativa -->
+            <section>
+                <div class="mb-12 text-center md:text-left">
+                    <span class="text-rose-400 text-sm font-bold tracking-widest uppercase mb-2 block"><i class="fa-solid fa-triangle-exclamation mr-2"></i>La Realidad Administrativa</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-white">¿Por qué duele gestionar un colegio?</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-8 bg-glass border border-rose-500/30 rounded-3xl relative overflow-hidden backdrop-blur-md">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-rose-500"></div>
+                        <div class="w-14 h-14 rounded-2xl bg-rose-500/20 flex items-center justify-center mb-6 border border-rose-500/30">
+                            <i class="fa-solid fa-folder-tree text-2xl text-rose-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Papeleo Infinito</h3>
+                        <p class="text-sm text-blue-200/70 leading-relaxed">Expedientes regados, actas que no cuadran y días enteros perdidos cruzando datos en Excel para cerrar el periodo.</p>
+                    </div>
+
+                    <div class="p-8 bg-glass border border-rose-500/30 rounded-3xl relative overflow-hidden backdrop-blur-md">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-rose-500"></div>
+                        <div class="w-14 h-14 rounded-2xl bg-rose-500/20 flex items-center justify-center mb-6 border border-rose-500/30">
+                            <i class="fa-solid fa-wallet text-2xl text-rose-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Fugas Financieras</h3>
+                        <p class="text-sm text-blue-200/70 leading-relaxed">Cobros manuales que generan cuellos de botella en caja y falta de visibilidad en los adeudos reales de los alumnos.</p>
+                    </div>
+
+                    <div class="p-8 bg-glass border border-rose-500/30 rounded-3xl relative overflow-hidden backdrop-blur-md">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-rose-500"></div>
+                        <div class="w-14 h-14 rounded-2xl bg-rose-500/20 flex items-center justify-center mb-6 border border-rose-500/30">
+                            <i class="fa-solid fa-users-slash text-2xl text-rose-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Familias Desconectadas</h3>
+                        <p class="text-sm text-blue-200/70 leading-relaxed">Tutores que exigen respuestas a coordinación por no tener acceso directo al desempeño y faltas de sus hijos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: La Bóveda -->
+            <section class="slide-flex-center">
+                <span class="px-4 py-1.5 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-bold border border-cyan-500/40 tracking-wide uppercase mb-6">El Ecosistema Aulix</span>
+                <h2 class="text-5xl md:text-6xl font-black text-white mb-6">Tu Propia <span class="text-cyan-400">Bóveda Digital</span></h2>
+                <p class="text-xl text-blue-200 max-w-3xl mb-12">Orquestamos la seguridad aislando tu base de datos. No te rentamos una habitación, te entregamos las llaves de tu propio edificio blindado.</p>
+                
+                <div class="w-full max-w-2xl bg-glass border border-blue-500/30 rounded-3xl p-8 flex items-center justify-between backdrop-blur-xl">
+                    <div class="text-center">
+                        <i class="fa-solid fa-shield-halved text-5xl text-blue-500 mb-3"></i>
+                        <p class="text-sm font-bold text-white">Motor AuLix</p>
+                    </div>
+                    <div class="flex-1 px-8 relative">
+                        <div class="w-full h-1 bg-cyan-500 rounded-full"></div>
+                        <i class="fa-solid fa-chevron-right absolute right-6 top-1/2 -translate-y-1/2 text-cyan-400"></i>
+                    </div>
+                    <div class="text-center bg-blue-900/50 p-4 rounded-2xl border border-blue-500/50">
+                        <i class="fa-solid fa-building-columns text-4xl text-cyan-400 mb-2"></i>
+                        <p class="text-sm font-bold text-white">Tu Colegio</p>
+                        <p class="text-[10px] text-cyan-300 uppercase tracking-widest mt-1">100% Aislado</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: PANTALLA REACTIVA -->
+            <section>
+                <div class="text-center mb-8">
+                    <span class="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-2 block"><i class="fa-solid fa-bolt mr-2"></i>Experiencia a la Medida</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-white">Un espacio para cada perfil.</h2>
+                </div>
+
+                <div class="grid md:grid-cols-12 gap-6 items-stretch">
+                    
+                    <!-- Menú Izquierdo Reactivo -->
+                    <div class="md:col-span-4 flex flex-col gap-3" id="interactive-menu">
+                        <!-- Botones generados por JS -->
+                    </div>
+
+                    <!-- Mockup de la App Derecha -->
+                    <div class="md:col-span-8 bg-[#0A1526] border border-blue-900/50 rounded-2xl flex flex-col shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+                        
+                        <div class="bg-[#0D1B2A] px-4 py-3 flex items-center border-b border-blue-900/50">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                            </div>
+                            <div class="flex-1 text-center text-xs font-mono text-blue-300/50">app.aulix.mx</div>
+                        </div>
+
+                        <div class="p-8 flex-1 flex flex-col justify-center bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-blend-overlay" id="interactive-screen">
+                            <!-- Contenido inyectado por JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5: Llamado a la Acción -->
+            <section class="slide-flex-center">
+                <div class="absolute inset-0 bg-blue-900/20 z-0"></div>
+                <div class="relative z-10">
+                    <i class="fa-solid fa-rocket text-6xl text-cyan-400 mb-6 drop-shadow-[0_0_30px_rgba(0,229,255,0.6)]"></i>
+                    <h2 class="text-5xl md:text-6xl font-black mb-6 text-white tracking-tight">Es hora de evolucionar.</h2>
+                    <p class="text-xl text-blue-200 mb-10 max-w-2xl mx-auto">Deja de apagar incendios diarios y toma el control real de tu institución. Migración gratuita y soporte 24/7.</p>
+                    
+                    <!-- Botón de color sólido -->
+                    <a href="https://aulix.mx" class="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 text-white font-black rounded-full text-lg transition-all hover:bg-blue-500 hover:scale-105">
+                        Agendar mi Demostración <i class="fa-solid fa-paper-plane"></i>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Scripts de Reveal.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+    
+    <!-- Script de la Pantallita Reactiva -->
+    <script>
+        const roles = [
+            { 
+                id: 'admin', title: 'Director', icon: 'fa-eye', color: 'text-indigo-400', bg: 'bg-indigo-500/20',
+                header: 'Visión Panorámica',
+                desc: 'Auditoría total del colegio. Toma decisiones al instante.',
+                features: ['Población escolar activa', 'Supervisión de rendimiento general', 'Cierre definitivo de ciclo', 'Auditoría de citas con tutores']
+            },
+            { 
+                id: 'docente', title: 'Docente', icon: 'fa-chalkboard-user', color: 'text-cyan-400', bg: 'bg-cyan-500/20',
+                header: 'Cero Papeleo',
+                desc: 'Interfaz limpia para enseñar, no para llenar burocracia.',
+                features: ['Pase de lista digital rápido', 'Registro de incidencias y conducta', 'Promedios y calificaciones automáticas', 'Alertas de alumnos en riesgo']
+            },
+            { 
+                id: 'caja', title: 'Caja y Finanzas', icon: 'fa-vault', color: 'text-emerald-400', bg: 'bg-emerald-500/20',
+                header: 'Caja Blindada',
+                desc: 'Cero fugas de capital y visibilidad total del periodo.',
+                features: ['Cobro de colegiaturas con recibos PDF', 'Registro de cortes de caja diarios', 'Catálogo y padrón de becarios', 'Notificaciones de adeudo automáticas']
+            },
+            { 
+                id: 'tutor', title: 'Familia', icon: 'fa-mobile-screen-button', color: 'text-purple-400', bg: 'bg-purple-500/20',
+                header: 'Transparencia Total',
+                desc: 'Un solo portal inteligente para estar siempre informado.',
+                features: ['Boletas y vida académica en tiempo real', 'Solicitud de trámites en línea', 'Estados de cuenta actualizados', 'Agendamiento de citas con maestros']
+            }
+        ];
+
+        let activeIndex = 0;
+        let autoplayTimer = null;
+
+        const menuContainer = document.getElementById('interactive-menu');
+        const screenContainer = document.getElementById('interactive-screen');
+
+        roles.forEach((role, index) => {
+            const btn = document.createElement('button');
+            btn.className = `role-btn w-full text-left p-4 rounded-xl border border-blue-800/40 flex items-center gap-4 bg-blue-950/30 backdrop-blur-sm cursor-pointer`;
+            btn.innerHTML = `
+                <div class="w-12 h-12 rounded-lg bg-blue-950 flex items-center justify-center text-xl shadow-inner border border-blue-800">
+                    <i class="fa-solid ${role.icon} text-blue-400/60 icon-ref"></i>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-blue-200/60 title-ref">${role.title}</h4>
+                </div>
+            `;
+            btn.onclick = () => updateScreen(index, true); 
+            menuContainer.appendChild(btn);
+        });
+
+        function updateScreen(index, isManual = false) {
+            activeIndex = index;
+            const current = roles[index];
+            const buttons = menuContainer.children;
+
+            for(let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active', 'bg-blue-900/40');
+                buttons[i].querySelector('.icon-ref').className = `fa-solid ${roles[i].icon} text-blue-400/60 icon-ref transition-colors`;
+                buttons[i].querySelector('.title-ref').classList.replace('text-white', 'text-blue-200/60');
+            }
+            buttons[index].classList.add('active', 'bg-blue-900/40');
+            buttons[index].querySelector('.icon-ref').className = `fa-solid ${current.icon} ${current.color} icon-ref transition-colors`;
+            buttons[index].querySelector('.title-ref').classList.replace('text-blue-200/60', 'text-white');
+
+            screenContainer.innerHTML = `
+                <div class="fade-content">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 ${current.bg} border border-white/10 shadow-lg">
+                        <span class="text-3xl ${current.color}"><i class="fa-solid ${current.icon}"></i></span>
+                    </div>
+                    <h3 class="text-3xl font-black text-white mb-2">${current.header}</h3>
+                    <p class="text-sm text-blue-200 mb-8 border-b border-blue-900/50 pb-4">${current.desc}</p>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        ${current.features.map(feat => `
+                            <div class="flex items-center gap-3 p-3 rounded-lg bg-blue-950/40 border border-blue-900/30">
+                                <i class="fa-solid fa-check ${current.color} text-sm"></i>
+                                <span class="text-blue-100 text-sm font-medium">${feat}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            if (isManual) resetTimer();
+        }
+
+        function startTimer() {
+            autoplayTimer = setInterval(() => {
+                let nextIndex = (activeIndex + 1) % roles.length;
+                updateScreen(nextIndex);
+            }, 6000);
+        }
+
+        function resetTimer() {
+            clearInterval(autoplayTimer);
+            startTimer();
+        }
+
+        Reveal.initialize({
+            hash: true,
+            transition: 'fade', 
+            controls: false, 
+            progress: true,
+            center: true,
+            margin: 0.1,
+            minScale: 0.2,
+            maxScale: 2.0
+        });
+
+        updateScreen(0);
+        startTimer();
+
+    </script>
+</body>
+</html>
