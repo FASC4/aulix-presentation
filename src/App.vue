@@ -119,11 +119,44 @@ const sendWhatsApp = () => {
   formSchool.value = '';
   showContactModal.value = false;
 }
+
+// Función para avanzar a la siguiente diapositiva
+const nextSlide = () => {
+  if (currentSlide.value < totalSlides - 1) {
+    currentSlide.value++
+  }
+}
+
+// Soporte para gestos táctiles (Swipe)
+const touchStartX = ref(0)
+const touchEndX = ref(0)
+
+const handleTouchStart = (e) => {
+  touchStartX.value = e.changedTouches[0].screenX
+}
+
+const handleTouchEnd = (e) => {
+  touchEndX.value = e.changedTouches[0].screenX
+  handleSwipe()
+}
+
+const handleSwipe = () => {
+  const swipeThreshold = 50 // Sensibilidad mínima en píxeles
+  if (touchEndX.value < touchStartX.value - swipeThreshold) {
+    // Deslizar a la izquierda -> Siguiente
+    if (currentSlide.value < totalSlides - 1) currentSlide.value++
+  } else if (touchEndX.value > touchStartX.value + swipeThreshold) {
+    // Deslizar a la derecha -> Anterior
+    if (currentSlide.value > 0) currentSlide.value--
+  }
+}
 </script>
 
 <template>
   <main 
     ref="presentationRef"
+    @touchstart="handleTouchStart"
+    @touchend="handleTouchEnd"
     class="h-screen w-full bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-hidden"
     tabindex="0"
     style="background-image: radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px; background-position: 0 0, 20px 20px;"
@@ -340,17 +373,24 @@ const sendWhatsApp = () => {
       </Transition>
     </div>
     
-    <!-- Indicador Flotante para Avanzar (Más grande y legible) -->
-    <div 
+    <!-- Botón / Indicador Flotante para Avanzar (Funciona con Click y Teclado) -->
+    <button 
       v-if="currentSlide > 0 && currentSlide < totalSlides - 1" 
-      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-3 rounded-full bg-blue-950/80 border border-blue-500/40 backdrop-blur-md text-sm md:text-base font-bold text-cyan-300 shadow-[0_0_20px_rgba(0,229,255,0.2)] pointer-events-none select-none transition-all duration-300"
+      @click="nextSlide"
+      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-3 rounded-full bg-blue-950/80 border border-blue-500/50 backdrop-blur-md text-xs sm:text-sm md:text-base font-bold text-cyan-300 shadow-[0_0_25px_rgba(0,229,255,0.3)] hover:scale-105 hover:bg-blue-900 active:scale-95 transition-all duration-300 cursor-pointer select-none"
     >
-      <span class="relative flex h-3 w-3">
+      <span class="relative flex h-3 w-3 flex-shrink-0">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
         <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"></span>
       </span>
-      <span>Presiona <kbd class="px-2 py-1 bg-blue-900 rounded-md border border-blue-700 text-white font-mono text-xs shadow-sm">Espacio</kbd> o <kbd class="px-2 py-1 bg-blue-900 rounded-md border border-blue-700 text-white font-mono text-xs shadow-sm"><i class="fa-solid fa-arrow-right"></i></kbd> para avanzar</span>
-    </div>
+      
+      <!-- Texto adaptativo para Escritorio y Móvil -->
+      <span>
+        Usa las flechas, <kbd class="hidden sm:inline-block px-2 py-0.5 bg-blue-900 rounded border border-blue-700 text-white font-mono text-xs">Espacio</kbd> o <span class="text-white underline decoration-cyan-400 font-extrabold">presiona aquí</span> para avanzar
+      </span>
+
+      <i class="fa-solid fa-chevron-right text-cyan-400 animate-pulse ml-1"></i>
+    </button>
 
     <!-- Contador de Slides -->
     <div class="absolute bottom-6 right-8 text-blue-500/50 font-mono text-sm z-50 font-bold select-none">
