@@ -178,9 +178,9 @@ const prevSlide = () => {
             Gestiona tu colegio sin perder la cabeza.
           </h2>
           
-          <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-blue-900/40 border border-blue-500/50 text-sm font-bold text-cyan-400 animate-pulse">
+          <!-- <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-blue-900/40 border border-blue-500/50 text-sm font-bold text-cyan-400 animate-pulse">
             Presiona <kbd class="px-2 py-1 bg-blue-950 rounded border border-blue-800 text-cyan-300">Espacio</kbd> o <kbd class="px-2 py-1 bg-blue-950 rounded border border-blue-800 text-cyan-300"><i class="fa-solid fa-arrow-right"></i></kbd> para iniciar
-          </div>
+          </div> -->
         </div>
 
         <!-- SLIDE 1: El Problema -->
