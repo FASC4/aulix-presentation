@@ -140,7 +140,7 @@ const prevSlide = () => {
 <template>
   <main 
     ref="presentationRef"
-    class="min-h-screen md:h-screen w-full bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-y-auto md:overflow-hidden"
+    class="min-h-screen md:h-screen w-full max-w-[100vw] bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-x-hidden overflow-y-auto md:overflow-hidden"
     tabindex="0"
     style="background-image: radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px; background-position: 0 0, 20px 20px;"
   >
@@ -157,7 +157,7 @@ const prevSlide = () => {
     </div>
 
     <!-- Contenedor de Diapositivas -->
-    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-center justify-center p-4 sm:p-6 md:p-12 pb-28 md:pb-16 min-h-0">
+    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-center justify-center p-4 sm:p-6 md:p-12 pb-28 md:pb-16 min-h-0 overflow-x-hidden">
       <Transition name="slide" mode="out-in">
         
         <!-- SLIDE 0: Portada -->
@@ -486,20 +486,21 @@ const prevSlide = () => {
   100% { transform: translateX(300%); }
 }
 
-/* Scroll suave global y prevención de bloqueos de scroll en móvil */
+/* Bloquear scroll horizontal en toda la página y permitir vertical suave */
 html, body {
-  overscroll-behavior-y: none;
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100vw;
   scroll-behavior: smooth;
+  touch-action: pan-y; /* Le indica al navegador móvil que solo permita scroll vertical */
 }
 
-/* Scrollbar fina para el menú horizontal de roles en móvil */
+/* Scrollbar discreta para el menú de roles */
 .custom-scrollbar::-webkit-scrollbar {
   height: 4px;
-  width: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: rgba(13, 27, 50, 0.3);
-  border-radius: 10px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: rgba(34, 211, 238, 0.4);
