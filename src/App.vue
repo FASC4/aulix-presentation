@@ -121,11 +121,11 @@ const sendWhatsApp = () => {
 }
 
 // Función para avanzar a la siguiente diapositiva
-const nextSlide = () => {
-  if (currentSlide.value < totalSlides - 1) {
-    currentSlide.value++
-  }
-}
+// const nextSlide = () => {
+//   if (currentSlide.value < totalSlides - 1) {
+//     currentSlide.value++
+//   }
+// }
 
 // Funciones de navegación
 const nextSlide = () => {
