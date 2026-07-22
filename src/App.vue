@@ -146,7 +146,7 @@ const prevSlide = () => {
 <template>
   <main 
     ref="presentationRef"
-    class="min-h-[100dvh] md:h-screen w-full max-w-[100vw] bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-x-hidden overflow-y-auto md:overflow-hidden"
+    class="h-[100dvh] md:h-screen w-full max-w-[100vw] bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-x-hidden overflow-y-auto md:overflow-hidden"
     tabindex="0"
     style="background-image: radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px; background-position: 0 0, 20px 20px;"
   >
@@ -492,17 +492,18 @@ const prevSlide = () => {
   100% { transform: translateX(300%); }
 }
 
-/* Bloquear scroll horizontal en toda la página y permitir vertical suave */
+/* Bloquear scroll nativo del body para evitar conflictos y efecto "rebote" */
 html, body {
-  overflow-x: hidden !important;
+  overflow: hidden !important; 
   width: 100%;
+  height: 100%;
   max-width: 100vw;
   scroll-behavior: smooth;
-  touch-action: pan-y; /* Le indica al navegador móvil que solo permita scroll vertical */
+  margin: 0;
+  padding: 0;
 }
 
-/* Aseguramos que <main> sea el único contenedor con scroll real en móvil,
-   y que ese scroll sea fluido en iOS/Safari */
+/* Aseguramos que <main> maneje su propio scroll de forma fluida */
 main {
   -webkit-overflow-scrolling: touch;
 }
@@ -518,6 +519,7 @@ main {
   background: rgba(34, 211, 238, 0.4);
   border-radius: 10px;
 }
+
 .progress-bar {
   animation: fillUp 5s linear forwards;
 }
