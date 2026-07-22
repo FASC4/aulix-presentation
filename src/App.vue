@@ -157,7 +157,7 @@ const prevSlide = () => {
     </div>
 
     <!-- Contenedor de Diapositivas -->
-    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-center justify-center p-4 sm:p-6 md:p-12 pb-28 md:pb-16 min-h-0 overflow-x-hidden">
+    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-start md:items-center justify-center p-4 sm:p-6 md:p-12 pb-28 md:pb-16 min-h-0 overflow-x-hidden overflow-y-visible">
       <Transition name="slide" mode="out-in">
         
         <!-- SLIDE 0: Portada -->
@@ -493,6 +493,12 @@ html, body {
   max-width: 100vw;
   scroll-behavior: smooth;
   touch-action: pan-y; /* Le indica al navegador móvil que solo permita scroll vertical */
+}
+
+/* Aseguramos que <main> sea el único contenedor con scroll real en móvil,
+   y que ese scroll sea fluido en iOS/Safari */
+main {
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Scrollbar discreta para el menú de roles */
