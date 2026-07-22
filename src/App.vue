@@ -157,7 +157,7 @@ const prevSlide = () => {
     </div>
 
     <!-- Contenedor de Diapositivas -->
-    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-center justify-center p-6 md:p-12 pb-24 md:pb-12">
+    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-center justify-center p-4 sm:p-6 md:p-12 pb-28 md:pb-16 min-h-0">
       <Transition name="slide" mode="out-in">
         
         <!-- SLIDE 0: Portada -->
@@ -241,67 +241,80 @@ const prevSlide = () => {
           </div>
         </div>
 
-        <!-- SLIDE 3: Roles Interactivos -->
-        <div v-else-if="currentSlide === 3" class="w-full" :key="3">
-          <div class="text-center mb-8">
-            <span class="text-cyan-400 text-sm font-bold tracking-widest uppercase mb-2 block"><i class="fa-solid fa-bolt mr-2"></i>Experiencia a la Medida</span>
-            <h2 class="text-4xl md:text-5xl font-black text-white">Un espacio para cada perfil.</h2>
+        <!-- SLIDE 3: Roles Interactivos (Optimizada para Móvil) -->
+        <div v-else-if="currentSlide === 3" class="w-full flex flex-col justify-center my-auto" :key="3">
+          <div class="text-center mb-6">
+            <span class="text-cyan-400 text-xs sm:text-sm font-bold tracking-widest uppercase mb-1 block"><i class="fa-solid fa-bolt mr-2"></i>Experiencia a la Medida</span>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white">Un espacio para cada perfil.</h2>
           </div>
 
-          <div class="grid md:grid-cols-12 gap-6 items-stretch h-[500px]">
-            <!-- Menú Lateral -->
-            <div class="md:col-span-4 flex flex-col gap-2 overflow-y-auto pr-2 custom-scrollbar">
+          <!-- Contenedor adaptativo: en móvil apila verticalmente o usa scroll horizontal fino -->
+          <div class="grid md:grid-cols-12 gap-4 md:gap-6 items-start w-full">
+            
+            <!-- Menú de Selección (En móvil es una barra horizontal fluida, en escritorio menú lateral) -->
+            <div class="md:col-span-4 flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto pb-2 md:pb-0 custom-scrollbar w-full flex-nowrap md:flex-wrap">
               <button 
                 v-for="(role, index) in roles" :key="role.id"
                 @click="selectRole(index)"
-                class="relative flex items-center gap-4 p-4 rounded-xl transition-all duration-300 border text-left bg-blue-950/30 backdrop-blur-sm overflow-hidden"
-                :class="activeRole === index ? `bg-blue-900/60 border-cyan-400/50 shadow-lg scale-[1.02]` : 'border-blue-800/40 hover:bg-blue-900/40'"
+                class="relative flex-shrink-0 md:flex-shrink flex items-center gap-3 p-3 md:p-4 rounded-xl transition-all duration-300 border text-left bg-blue-950/40 backdrop-blur-sm overflow-hidden min-w-[160px] md:min-w-0"
+                :class="activeRole === index ? `bg-blue-900/80 border-cyan-400/60 shadow-lg` : 'border-blue-800/40 hover:bg-blue-900/40'"
               >
-                <!-- Barra de progreso (Cronómetro visual) -->
+                <!-- Barra de progreso (Cronómetro) -->
                 <div v-if="activeRole === index" class="absolute bottom-0 left-0 h-1 bg-cyan-400 progress-bar"></div>
 
-                <div class="w-12 h-12 rounded-lg flex items-center justify-center text-xl transition-all duration-300 shadow-inner border"
+                <div class="w-9 h-9 md:w-12 md:h-12 rounded-lg flex items-center justify-center text-base md:text-xl transition-all duration-300 shadow-inner border flex-shrink-0"
                      :class="activeRole === index ? `bg-gradient-to-br ${role.color} border-white/20 text-white` : 'bg-blue-950 border-blue-800 text-blue-400/60'">
                   <i :class="role.icon"></i>
                 </div>
-                <div class="flex-1">
-                  <h4 class="font-bold text-base" :class="activeRole === index ? 'text-white' : 'text-blue-200/60'">{{ role.title }}</h4>
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-bold text-xs md:text-base truncate" :class="activeRole === index ? 'text-white' : 'text-blue-200/60'">{{ role.title }}</h4>
                 </div>
               </button>
             </div>
 
-            <!-- Contenido de la Pantalla -->
-            <div class="md:col-span-8 bg-[#0A1526] border border-blue-900/50 rounded-2xl flex flex-col shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
-              <div class="bg-[#0D1B2A] px-4 py-3 flex items-center border-b border-blue-900/50">
-                <div class="flex gap-2">
-                  <div class="w-3 h-3 rounded-full bg-rose-500"></div>
-                  <div class="w-3 h-3 rounded-full bg-amber-500"></div>
-                  <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+            <!-- Contenido de la Pantalla (Sin altura fija para que NUNCA se corte) -->
+            <div class="md:col-span-8 bg-[#0A1526] border border-blue-900/50 rounded-2xl flex flex-col shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden w-full">
+              
+              <!-- Barra superior tipo navegador -->
+              <div class="bg-[#0D1B2A] px-4 py-2.5 flex items-center border-b border-blue-900/50">
+                <div class="flex gap-1.5">
+                  <div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
+                  <div class="w-2.5 h-2.5 rounded-full bg-amber-500"></div>
+                  <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
                 </div>
-                <div class="flex-1 text-center text-xs font-mono text-blue-300/50">app.aulix.mx/{{ roles[activeRole].id }}</div>
+                <div class="flex-1 text-center text-[10px] md:text-xs font-mono text-blue-300/50 truncate">app.aulix.mx/{{ roles[activeRole].id }}</div>
               </div>
 
-              <div class="p-8 flex-1 flex flex-col justify-center bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-blend-overlay">
+              <!-- Ventana principal del perfil -->
+              <div class="p-5 sm:p-6 md:p-8 flex-1 flex flex-col justify-center bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-blend-overlay">
                 <Transition name="fade" mode="out-in">
                   <div :key="activeRole" class="w-full">
-                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6 border border-white/10 shadow-lg" :class="[roles[activeRole].bg, roles[activeRole].text]">
-                      <span class="text-3xl"><i :class="roles[activeRole].icon"></i></span>
+                    <div class="flex items-center gap-4 mb-4">
+                      <div class="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-xl border border-white/10 shadow-lg flex-shrink-0" :class="[roles[activeRole].bg, roles[activeRole].text]">
+                        <span class="text-2xl md:text-3xl"><i :class="roles[activeRole].icon"></i></span>
+                      </div>
+                      <div>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-black text-white leading-tight">{{ roles[activeRole].title }}</h3>
+                        <p class="text-xs sm:text-sm text-blue-200/90 leading-snug">{{ roles[activeRole].desc }}</p>
+                      </div>
                     </div>
                     
-                    <h3 class="text-3xl font-black text-white mb-2">{{ roles[activeRole].title }}</h3>
-                    <p class="text-sm text-blue-200 mb-8 border-b border-blue-900/50 pb-4">{{ roles[activeRole].desc }}</p>
+                    <hr class="border-blue-900/50 my-4" />
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Cuadrícula de Ventajas / Características -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-3">
                       <div v-for="(feat, idx) in roles[activeRole].features" :key="idx" 
-                           class="flex items-center gap-3 p-3 rounded-lg bg-blue-950/40 border border-blue-900/30">
-                        <i class="fa-solid fa-check text-sm" :class="roles[activeRole].text"></i>
-                        <span class="text-blue-100 text-sm font-medium">{{ feat }}</span>
+                           class="flex items-start gap-2.5 p-2.5 md:p-3 rounded-lg bg-blue-950/40 border border-blue-900/30">
+                        <i class="fa-solid fa-check text-xs md:text-sm mt-0.5 flex-shrink-0" :class="roles[activeRole].text"></i>
+                        <span class="text-blue-100 text-xs sm:text-sm font-medium leading-normal">{{ feat }}</span>
                       </div>
                     </div>
                   </div>
                 </Transition>
               </div>
+
             </div>
+
           </div>
         </div>
 
@@ -473,15 +486,23 @@ const prevSlide = () => {
   100% { transform: translateX(300%); }
 }
 
+/* Scroll suave global y prevención de bloqueos de scroll en móvil */
+html, body {
+  overscroll-behavior-y: none;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar fina para el menú horizontal de roles en móvil */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  height: 4px;
+  width: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(13, 27, 50, 0.5);
+  background: rgba(13, 27, 50, 0.3);
   border-radius: 10px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(30, 58, 138, 0.5);
+  background: rgba(34, 211, 238, 0.4);
   border-radius: 10px;
 }
 .progress-bar {
