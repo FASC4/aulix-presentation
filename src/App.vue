@@ -127,46 +127,19 @@ const nextSlide = () => {
   }
 }
 
-// Soporte para gestos táctiles (Swipe)
-const touchStartX = ref(0)
-const touchStartY = ref(0)
-const touchEndX = ref(0)
-const touchEndY = ref(0)
-
-const handleTouchStart = (e) => {
-  touchStartX.value = e.changedTouches[0].screenX
-  touchStartY.value = e.changedTouches[0].screenY
+// Funciones de navegación
+const nextSlide = () => {
+  if (currentSlide.value < totalSlides - 1) currentSlide.value++
 }
 
-const handleTouchEnd = (e) => {
-  touchEndX.value = e.changedTouches[0].screenX
-  touchEndY.value = e.changedTouches[0].screenY
-  handleSwipe()
-}
-
-const handleSwipe = () => {
-  const diffX = touchEndX.value - touchStartX.value
-  const diffY = touchEndY.value - touchStartY.value
-  const swipeThreshold = 50 // Mínimo de px para detectar deslizamiento
-
-  // Solo si el movimiento horizontal es mayor al vertical (para no bloquear el scroll de la página)
-  if (Math.abs(diffX) > Math.abs(diffY)) {
-    if (diffX < -swipeThreshold) {
-      // Swipe izquierda -> Siguiente
-      if (currentSlide.value < totalSlides - 1) currentSlide.value++
-    } else if (diffX > swipeThreshold) {
-      // Swipe derecha -> Anterior
-      if (currentSlide.value > 0) currentSlide.value--
-    }
-  }
+const prevSlide = () => {
+  if (currentSlide.value > 0) currentSlide.value--
 }
 </script>
 
 <template>
   <main 
     ref="presentationRef"
-    @touchstart="handleTouchStart"
-    @touchend="handleTouchEnd"
     class="min-h-screen md:h-screen w-full bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-y-auto md:overflow-hidden"
     tabindex="0"
     style="background-image: radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px; background-position: 0 0, 20px 20px;"
@@ -383,27 +356,38 @@ const handleSwipe = () => {
       </Transition>
     </div>
     
-    <!-- Botón / Indicador Flotante para Avanzar (Funciona con Click y Teclado) -->
-    <button 
-      v-if="currentSlide > 0 && currentSlide < totalSlides - 1" 
-      @click="nextSlide"
-      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-3 rounded-full bg-blue-950/80 border border-blue-500/50 backdrop-blur-md text-xs sm:text-sm md:text-base font-bold text-cyan-300 shadow-[0_0_25px_rgba(0,229,255,0.3)] hover:scale-105 hover:bg-blue-900 active:scale-95 transition-all duration-300 cursor-pointer select-none"
-    >
-      <span class="relative flex h-3 w-3 flex-shrink-0">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"></span>
-      </span>
+    <!-- Controles Flotantes de Navegación (Flecha Izquierda / Flecha Derecha) -->
+    <div class="fixed md:absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-blue-950/80 border border-blue-500/40 backdrop-blur-md p-1.5 rounded-full shadow-[0_0_25px_rgba(0,229,255,0.25)] select-none">
       
-      <!-- Texto adaptativo para Escritorio y Móvil -->
-      <span>
-        Usa las flechas, <kbd class="hidden sm:inline-block px-2 py-0.5 bg-blue-900 rounded border border-blue-700 text-white font-mono text-xs">Espacio</kbd> o <span class="text-white underline decoration-cyan-400 font-extrabold">presiona aquí</span> para avanzar
+      <!-- Botón Anterior -->
+      <button 
+        v-if="currentSlide > 0"
+        @click="prevSlide"
+        class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-900/60 border border-blue-700/50 flex items-center justify-center text-cyan-300 hover:text-white hover:bg-blue-600 active:scale-95 transition-all cursor-pointer"
+        title="Diapositiva Anterior"
+      >
+        <i class="fa-solid fa-arrow-left text-sm md:text-base"></i>
+      </button>
+
+      <!-- Indicador o Atajo de Teclado (Visible solo si se puede avanzar) -->
+      <span v-if="currentSlide < totalSlides - 1" class="text-xs text-cyan-300/80 font-bold px-2 hidden sm:inline-block">
+        Navega con las flechas o <kbd class="px-1.5 py-0.5 bg-blue-900 rounded border border-blue-700 text-white font-mono text-[10px]">Espacio</kbd>
       </span>
 
-      <i class="fa-solid fa-chevron-right text-cyan-400 animate-pulse ml-1"></i>
-    </button>
+      <!-- Botón Siguiente -->
+      <button 
+        v-if="currentSlide < totalSlides - 1"
+        @click="nextSlide"
+        class="px-4 h-10 md:h-12 rounded-full bg-blue-600 hover:bg-blue-500 border border-cyan-400/50 flex items-center gap-2 text-white font-bold text-xs md:text-sm shadow-[0_0_15px_rgba(37,99,235,0.5)] active:scale-95 transition-all cursor-pointer"
+        title="Siguiente Diapositiva"
+      >
+        <span>Siguiente</span>
+        <i class="fa-solid fa-arrow-right text-sm"></i>
+      </button>
+    </div>
 
     <!-- Contador de Slides -->
-    <div class="absolute bottom-6 right-8 text-blue-500/50 font-mono text-sm z-50 font-bold select-none">
+    <div class="fixed md:absolute bottom-6 right-6 text-blue-500/60 font-mono text-xs md:text-sm z-50 font-bold select-none bg-blue-950/60 px-3 py-1.5 rounded-full border border-blue-900/50 backdrop-blur-sm">
       {{ currentSlide + 1 }} / {{ totalSlides }}
     </div>
 
