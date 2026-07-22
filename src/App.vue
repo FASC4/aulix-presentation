@@ -77,6 +77,12 @@ watch(currentSlide, (newSlide) => {
   } else {
     stopRoleTimer()
   }
+
+  // Reiniciamos el scroll al inicio en cada cambio de diapositiva (clave en móvil):
+  // si el usuario bajó en una slide alta y avanza a una más corta, sin esto
+  // el navegador conserva el scrollTop anterior y da la sensación de que
+  // "no baja" o se queda topado.
+  presentationRef.value?.scrollTo({ top: 0, behavior: 'instant' })
 })
 
 const presentationRef = ref(null)
@@ -140,7 +146,7 @@ const prevSlide = () => {
 <template>
   <main 
     ref="presentationRef"
-    class="min-h-screen md:h-screen w-full max-w-[100vw] bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-x-hidden overflow-y-auto md:overflow-hidden"
+    class="min-h-[100dvh] md:h-screen w-full max-w-[100vw] bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-x-hidden overflow-y-auto md:overflow-hidden"
     tabindex="0"
     style="background-image: radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px; background-position: 0 0, 20px 20px;"
   >
@@ -157,7 +163,7 @@ const prevSlide = () => {
     </div>
 
     <!-- Contenedor de Diapositivas -->
-    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-start md:items-center justify-center p-4 sm:p-6 md:p-12 pb-28 md:pb-16 min-h-0 overflow-x-hidden overflow-y-visible">
+    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-start md:items-center justify-center p-4 sm:p-6 md:p-12 pb-36 md:pb-16 min-h-0 overflow-x-hidden overflow-y-visible">
       <Transition name="slide" mode="out-in">
         
         <!-- SLIDE 0: Portada -->
