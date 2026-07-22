@@ -129,25 +129,35 @@ const nextSlide = () => {
 
 // Soporte para gestos táctiles (Swipe)
 const touchStartX = ref(0)
+const touchStartY = ref(0)
 const touchEndX = ref(0)
+const touchEndY = ref(0)
 
 const handleTouchStart = (e) => {
   touchStartX.value = e.changedTouches[0].screenX
+  touchStartY.value = e.changedTouches[0].screenY
 }
 
 const handleTouchEnd = (e) => {
   touchEndX.value = e.changedTouches[0].screenX
+  touchEndY.value = e.changedTouches[0].screenY
   handleSwipe()
 }
 
 const handleSwipe = () => {
-  const swipeThreshold = 50 // Sensibilidad mínima en píxeles
-  if (touchEndX.value < touchStartX.value - swipeThreshold) {
-    // Deslizar a la izquierda -> Siguiente
-    if (currentSlide.value < totalSlides - 1) currentSlide.value++
-  } else if (touchEndX.value > touchStartX.value + swipeThreshold) {
-    // Deslizar a la derecha -> Anterior
-    if (currentSlide.value > 0) currentSlide.value--
+  const diffX = touchEndX.value - touchStartX.value
+  const diffY = touchEndY.value - touchStartY.value
+  const swipeThreshold = 50 // Mínimo de px para detectar deslizamiento
+
+  // Solo si el movimiento horizontal es mayor al vertical (para no bloquear el scroll de la página)
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    if (diffX < -swipeThreshold) {
+      // Swipe izquierda -> Siguiente
+      if (currentSlide.value < totalSlides - 1) currentSlide.value++
+    } else if (diffX > swipeThreshold) {
+      // Swipe derecha -> Anterior
+      if (currentSlide.value > 0) currentSlide.value--
+    }
   }
 }
 </script>
@@ -157,7 +167,7 @@ const handleSwipe = () => {
     ref="presentationRef"
     @touchstart="handleTouchStart"
     @touchend="handleTouchEnd"
-    class="h-screen w-full bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-hidden"
+    class="min-h-screen md:h-screen w-full bg-[#040B16] text-white font-sans outline-none flex flex-col relative overflow-y-auto md:overflow-hidden"
     tabindex="0"
     style="background-image: radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px), radial-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px; background-position: 0 0, 20px 20px;"
   >
@@ -174,7 +184,7 @@ const handleSwipe = () => {
     </div>
 
     <!-- Contenedor de Diapositivas -->
-    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-center justify-center p-8 md:p-12">
+    <div class="flex-1 relative z-10 w-full max-w-6xl mx-auto flex items-center justify-center p-6 md:p-12 pb-24 md:pb-12">
       <Transition name="slide" mode="out-in">
         
         <!-- SLIDE 0: Portada -->
