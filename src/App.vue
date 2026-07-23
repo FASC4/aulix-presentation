@@ -364,7 +364,7 @@ const prevSlide = () => {
           <div class="relative z-10">
             <i class="fa-solid fa-rocket text-6xl text-cyan-400 mb-8 drop-shadow-[0_0_30px_rgba(0,229,255,0.6)] animate-bounce"></i>
             <h2 class="text-5xl md:text-7xl font-black mb-6 text-white tracking-tight">Es hora de evolucionar.</h2>
-            <p class="text-xl text-blue-200 mb-12 max-w-2xl mx-auto">Deja de apagar incendios diarios y toma el control real de tu institución. Migración gratuita y soporte constante.</p>
+            <p class="text-xl text-blue-200 mb-12 max-w-2xl mx-auto">Deja de apagar incendios diarios y toma el control real de tu institución. Planes de migración y soporte constante.</p>
             
             <a @click="showContactModal = true" class="inline-flex items-center gap-3 px-10 py-5 bg-blue-600 text-white font-black rounded-full text-xl transition-all hover:bg-blue-500 hover:scale-105 shadow-[0_0_40px_rgba(37,99,235,0.5)]">
               Contáctanos <i class="fa-solid fa-paper-plane"></i>
